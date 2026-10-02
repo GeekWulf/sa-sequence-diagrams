@@ -1,0 +1,270 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="qgAPdKfGOTOS2gY_MDIl">
+    <mxGraphModel dx="2795" dy="1405" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" mermaidData="{&#xa;  &quot;data&quot;: &quot;%%{init: {\n  \&quot;theme\&quot;: \&quot;base\&quot;,\n  \&quot;themeVariables\&quot;: {\n    \&quot;background\&quot;: \&quot;#ffffff\&quot;,\n    \&quot;primaryColor\&quot;: \&quot;#ffffff\&quot;,\n    \&quot;primaryTextColor\&quot;: \&quot;#000000\&quot;,\n    \&quot;primaryBorderColor\&quot;: \&quot;#000000\&quot;,\n    \&quot;lineColor\&quot;: \&quot;#000000\&quot;,\n    \&quot;secondaryColor\&quot;: \&quot;#ffffff\&quot;,\n    \&quot;tertiaryColor\&quot;: \&quot;#ffffff\&quot;,\n    \&quot;actorBkg\&quot;: \&quot;#ffffff\&quot;,\n    \&quot;actorBorder\&quot;: \&quot;#000000\&quot;,\n    \&quot;actorTextColor\&quot;: \&quot;#000000\&quot;,\n    \&quot;actorLineColor\&quot;: \&quot;#000000\&quot;,\n    \&quot;signalColor\&quot;: \&quot;#000000\&quot;,\n    \&quot;signalTextColor\&quot;: \&quot;#000000\&quot;,\n    \&quot;labelBoxBkgColor\&quot;: \&quot;#ffffff\&quot;,\n    \&quot;labelBoxBorderColor\&quot;: \&quot;#000000\&quot;,\n    \&quot;labelTextColor\&quot;: \&quot;#000000\&quot;,\n    \&quot;loopTextColor\&quot;: \&quot;#000000\&quot;,\n    \&quot;noteBkgColor\&quot;: \&quot;#ffffff\&quot;,\n    \&quot;noteBorderColor\&quot;: \&quot;#000000\&quot;,\n    \&quot;noteTextColor\&quot;: \&quot;#000000\&quot;,\n    \&quot;activationBkgColor\&quot;: \&quot;#ffffff\&quot;,\n    \&quot;activationBorderColor\&quot;: \&quot;#000000\&quot;\n  }\n}}%%\n\nsequenceDiagram\n    title UC3 — HR Views Daily Bookings\n\n    actor HR\n    participant Page as DailyBookingsPage\n    participant Controller as DailyBookingsController\n    participant UseCase as ViewDailyBookingsUseCase\n    participant Repository as BookingRepository\n    participant DB as Supabase\n\n    HR-&gt;&gt;Page: Open daily bookings page\n    activate Page\n    Page--&gt;&gt;HR: Display empty page and return-time selector\n    deactivate Page\n\n    HR-&gt;&gt;Page: Select return-time slot (4:00 PM or 6:30 PM)\n    activate Page\n\n    Page-&gt;&gt;Controller: viewDailyBookings(returnTime)\n    activate Controller\n\n    Controller-&gt;&gt;Controller: validateReturnTime(returnTime)\n\n    alt Invalid return-time slot\n        Controller--&gt;&gt;Page: Return validation error\n        Page--&gt;&gt;HR: Display validation error\n\n    else Valid return-time slot\n        Controller-&gt;&gt;UseCase: execute(returnTime)\n        activate UseCase\n\n        UseCase-&gt;&gt;Repository: getStopSummaries(returnTime)\n        activate Repository\n\n        Repository-&gt;&gt;DB: execute(Q1, returnTime, CURRENT_DATE)\n        activate DB\n\n        Note over Repository,DB: Group today&#39;s bookings by stop\n\n        DB--&gt;&gt;Repository: Stop names and passenger counts\n        deactivate DB\n\n        Repository--&gt;&gt;UseCase: StopSummary[]\n        deactivate Repository\n\n        alt No bookings for selected slot\n            UseCase-&gt;&gt;UseCase: createEmptyResult()\n\n        else Bookings found\n            loop For each stop summary\n                UseCase-&gt;&gt;Repository: getEmployeesByStop(returnTime, stopId)\n                activate Repository\n\n                Repository-&gt;&gt;DB: execute(Q2, returnTime, stopId, CURRENT_DATE)\n                activate DB\n\n                Note over Repository,DB: Retrieve employees booked for this stop\n\n                DB--&gt;&gt;Repository: Employee names\n                deactivate DB\n\n                Repository--&gt;&gt;UseCase: EmployeeSummary[]\n                deactivate Repository\n            end\n\n            UseCase-&gt;&gt;UseCase: combineStopsCountsAndEmployees()\n        end\n\n        UseCase--&gt;&gt;Controller: DailyBookingView[]\n        deactivate UseCase\n\n        Controller--&gt;&gt;Page: Return daily booking details\n\n        alt DailyBookingView is empty\n            Page--&gt;&gt;HR: Display \&quot;No bookings found\&quot;\n\n        else DailyBookingView contains bookings\n            Page--&gt;&gt;HR: Display stops and passenger counts\n\n            loop For each stop\n                Page--&gt;&gt;HR: Display employee names\n            end\n\n            HR-&gt;&gt;Page: Review daily bookings\n        end\n    end\n\n    deactivate Controller\n    deactivate Page\n\n    Note over Repository,DB: All \&quot;today\&quot; filters use database CURRENT_DATE&quot;,&#xa;  &quot;config&quot;: null&#xa;}" id="N0BWEeQAWB3H4twJMfRT-62">
+          <mxCell connectable="0" parent="1" style="group;transparentBounds=1;editIcon=1;lockedGroup=0;groupPadding=10;" vertex="1">
+            <mxGeometry as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="HR" mermaidId="n:HR" mermaidBaseStyle="html=1;shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};lifelineDashed=0;strokeWidth=2;rounded=1;absoluteArcSize=1;arcSize=6;lifelineColor=#000000;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;participant=seqActorStick;verticalAlign=bottom;align=center;spacingBottom=4;size=90;lifelineMirror=1;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="HR" id="N0BWEeQAWB3H4twJMfRT-63">
+          <mxCell parent="N0BWEeQAWB3H4twJMfRT-62" style="html=1;shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};lifelineDashed=0;strokeWidth=2;rounded=1;absoluteArcSize=1;arcSize=6;lifelineColor=#000000;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;participant=seqActorStick;verticalAlign=bottom;align=center;spacingBottom=4;size=90;lifelineMirror=1;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="1340" width="150" x="50" y="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label=":DailyBookingsPage" mermaidId="n:Page" mermaidBaseStyle="html=1;shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};lifelineDashed=0;strokeWidth=2;rounded=1;absoluteArcSize=1;arcSize=6;lifelineColor=#000000;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;size=65;lifelineMirror=1;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="DailyBookingsPage" id="N0BWEeQAWB3H4twJMfRT-64">
+          <mxCell parent="N0BWEeQAWB3H4twJMfRT-62" style="html=1;shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};lifelineDashed=0;strokeWidth=2;rounded=1;absoluteArcSize=1;arcSize=6;lifelineColor=#000000;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;size=65;lifelineMirror=1;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="1320" width="150" x="330" y="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="N0BWEeQAWB3H4twJMfRT-66" parent="N0BWEeQAWB3H4twJMfRT-64" style="html=1;points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" value="" vertex="1">
+          <mxGeometry height="963" width="10" x="70" y="197" as="geometry" />
+        </mxCell>
+        <UserObject label="&lt;font style=&quot;font-size: 15px;&quot;&gt;:DailyBookingsController&lt;/font&gt;" mermaidId="n:Controller" mermaidBaseStyle="html=1;shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};lifelineDashed=0;strokeWidth=2;rounded=1;absoluteArcSize=1;arcSize=6;lifelineColor=#000000;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;size=65;lifelineMirror=1;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="DailyBookingsController" id="N0BWEeQAWB3H4twJMfRT-67">
+          <mxCell parent="N0BWEeQAWB3H4twJMfRT-62" style="html=1;shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};lifelineDashed=0;strokeWidth=2;rounded=1;absoluteArcSize=1;arcSize=6;lifelineColor=#000000;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;size=65;lifelineMirror=1;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="1320" width="174" x="590" y="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="N0BWEeQAWB3H4twJMfRT-68" parent="N0BWEeQAWB3H4twJMfRT-67" style="html=1;points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" value="" vertex="1">
+          <mxGeometry height="919" width="10" x="82" y="241" as="geometry" />
+        </mxCell>
+        <UserObject label="&lt;font style=&quot;font-size: 15px;&quot;&gt;:ViewDailyBookingsUseCase&lt;/font&gt;" mermaidId="n:UseCase" mermaidBaseStyle="html=1;shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};lifelineDashed=0;strokeWidth=2;rounded=1;absoluteArcSize=1;arcSize=6;lifelineColor=#000000;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;size=65;lifelineMirror=1;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="ViewDailyBookingsUseCase" id="N0BWEeQAWB3H4twJMfRT-69">
+          <mxCell parent="N0BWEeQAWB3H4twJMfRT-62" style="html=1;shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};lifelineDashed=0;strokeWidth=2;rounded=1;absoluteArcSize=1;arcSize=6;lifelineColor=#000000;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;size=65;lifelineMirror=1;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="1320" width="195" x="850" y="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label=":BookingRepository" mermaidId="n:Repository" mermaidBaseStyle="html=1;shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};lifelineDashed=0;strokeWidth=2;rounded=1;absoluteArcSize=1;arcSize=6;lifelineColor=#000000;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;size=65;lifelineMirror=1;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="BookingRepository" id="N0BWEeQAWB3H4twJMfRT-71">
+          <mxCell parent="N0BWEeQAWB3H4twJMfRT-62" style="html=1;shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};lifelineDashed=0;strokeWidth=2;rounded=1;absoluteArcSize=1;arcSize=6;lifelineColor=#000000;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;size=65;lifelineMirror=1;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="1320" width="150" x="1210" y="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label=":DBConnector" mermaidId="n:DB" mermaidBaseStyle="html=1;shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};lifelineDashed=0;strokeWidth=2;rounded=1;absoluteArcSize=1;arcSize=6;lifelineColor=#000000;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;size=65;lifelineMirror=1;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="Supabase" id="N0BWEeQAWB3H4twJMfRT-74">
+          <mxCell parent="N0BWEeQAWB3H4twJMfRT-62" style="html=1;shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};lifelineDashed=0;strokeWidth=2;rounded=1;absoluteArcSize=1;arcSize=6;lifelineColor=#000000;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;size=65;lifelineMirror=1;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="1320" width="150" x="1540" y="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="SelectTimeSlot(เวลาที่ HR เลือก)" mermaidId="e:HR-&gt;Page#1" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="Select return-time slot (4:00 PM or 6:30 PM)" id="N0BWEeQAWB3H4twJMfRT-95">
+          <mxCell edge="1" parent="N0BWEeQAWB3H4twJMfRT-62" source="N0BWEeQAWB3H4twJMfRT-63" style="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="N0BWEeQAWB3H4twJMfRT-66">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="309" y="227" />
+              </Array>
+              <mxPoint x="125" y="227" as="sourcePoint" />
+              <mxPoint x="492" y="227" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="viewDailyBookings(returnTime)" mermaidId="e:Page-&gt;Controller#0" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="viewDailyBookings(returnTime)" id="N0BWEeQAWB3H4twJMfRT-96">
+          <mxCell edge="1" parent="N0BWEeQAWB3H4twJMfRT-62" source="N0BWEeQAWB3H4twJMfRT-66" style="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="N0BWEeQAWB3H4twJMfRT-68">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="541" y="271" />
+              </Array>
+              <mxPoint x="410" y="271" as="sourcePoint" />
+              <mxPoint x="672" y="271" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <mxCell id="N0BWEeQAWB3H4twJMfRT-70" parent="N0BWEeQAWB3H4twJMfRT-62" style="html=1;points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" value="" vertex="1">
+          <mxGeometry height="827" width="10" x="942.5" y="310" as="geometry" />
+        </mxCell>
+        <UserObject label="" mermaidId="e:UseCase-&gt;UseCase#0" mermaidBaseStyle="edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=1;endArrow=block;endSize=9;verticalAlign=bottom;align=center;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="" id="N0BWEeQAWB3H4twJMfRT-106">
+          <mxCell edge="1" parent="N0BWEeQAWB3H4twJMfRT-62" source="N0BWEeQAWB3H4twJMfRT-70" style="edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=1;endArrow=block;endSize=9;verticalAlign=bottom;align=center;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;rounded=0;" target="N0BWEeQAWB3H4twJMfRT-70">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="990" y="594" />
+                <mxPoint x="1000" y="610" />
+                <mxPoint x="990" y="620" />
+              </Array>
+              <mxPoint x="1018" y="594" as="sourcePoint" />
+              <mxPoint x="1018" y="618" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:UseCase-&gt;UseCase#1" mermaidBaseStyle="edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=1;endArrow=block;endSize=9;verticalAlign=bottom;align=center;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="" id="N0BWEeQAWB3H4twJMfRT-112">
+          <mxCell edge="1" parent="N0BWEeQAWB3H4twJMfRT-62" source="N0BWEeQAWB3H4twJMfRT-70" style="edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=1;endArrow=block;endSize=9;verticalAlign=bottom;align=center;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;rounded=0;" target="N0BWEeQAWB3H4twJMfRT-70">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1000" y="1023" />
+                <mxPoint x="1010" y="1035" />
+                <mxPoint x="1000" y="1047" />
+              </Array>
+              <mxPoint x="996" y="1023" as="sourcePoint" />
+              <mxPoint x="996" y="1047" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <mxCell id="N0BWEeQAWB3H4twJMfRT-72" parent="N0BWEeQAWB3H4twJMfRT-62" style="html=1;points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" value="" vertex="1">
+          <mxGeometry height="181" width="10" x="1280" y="354" as="geometry" />
+        </mxCell>
+        <mxCell id="N0BWEeQAWB3H4twJMfRT-73" parent="N0BWEeQAWB3H4twJMfRT-62" style="html=1;points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" value="" vertex="1">
+          <mxGeometry height="181" width="10" x="1280" y="788" as="geometry" />
+        </mxCell>
+        <mxCell id="N0BWEeQAWB3H4twJMfRT-75" parent="N0BWEeQAWB3H4twJMfRT-62" style="html=1;points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" value="" vertex="1">
+          <mxGeometry height="93" width="10" x="1610" y="398" as="geometry" />
+        </mxCell>
+        <mxCell id="N0BWEeQAWB3H4twJMfRT-76" parent="N0BWEeQAWB3H4twJMfRT-62" style="html=1;points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" value="" vertex="1">
+          <mxGeometry height="93" width="10" x="1610" y="832" as="geometry" />
+        </mxCell>
+        <UserObject label="alt" mermaidId="n:f1" mermaidBaseStyle="html=1;shape=umlFrame;dashed=1;fixDash=1;dashPattern=2 2;strokeWidth=2;pointerEvents=0;dropTarget=0;fillColor=#ffffff;strokeColor=#000000;fontSize=16;align=center;verticalAlign=middle;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=#000000;height=20;width=50;" mermaidBaseValue="alt" id="N0BWEeQAWB3H4twJMfRT-81">
+          <mxCell parent="N0BWEeQAWB3H4twJMfRT-62" style="html=1;shape=umlFrame;dashed=1;fixDash=1;dashPattern=2 2;strokeWidth=2;pointerEvents=0;dropTarget=0;fillColor=#ffffff;strokeColor=#000000;fontSize=16;align=center;verticalAlign=middle;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=#000000;height=20;width=50;" vertex="1">
+            <mxGeometry height="548" width="740" x="900" y="545" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="N0BWEeQAWB3H4twJMfRT-82" parent="N0BWEeQAWB3H4twJMfRT-81" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=16;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=#000000;" value="[No bookings for selected slot]" vertex="1">
+          <mxGeometry height="16" width="697.078410311493" x="42.921589688506984" y="2" as="geometry" />
+        </mxCell>
+        <mxCell id="N0BWEeQAWB3H4twJMfRT-83" parent="N0BWEeQAWB3H4twJMfRT-81" style="shape=line;dashed=1;fixDash=1;dashPattern=2 2;strokeColor=#000000;" vertex="1">
+          <mxGeometry height="1" width="740" y="124" as="geometry" />
+        </mxCell>
+        <mxCell id="N0BWEeQAWB3H4twJMfRT-84" parent="N0BWEeQAWB3H4twJMfRT-81" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=16;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=#000000;" value="[Bookings found]" vertex="1">
+          <mxGeometry height="16" width="740" y="126" as="geometry" />
+        </mxCell>
+        <UserObject label="loop" mermaidId="n:f2" mermaidBaseStyle="html=1;shape=umlFrame;dashed=1;fixDash=1;dashPattern=2 2;strokeWidth=2;pointerEvents=0;dropTarget=0;fillColor=#ffffff;strokeColor=#000000;fontSize=16;align=center;verticalAlign=middle;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=#000000;height=20;width=50;" mermaidBaseValue="loop" id="N0BWEeQAWB3H4twJMfRT-85">
+          <mxCell parent="N0BWEeQAWB3H4twJMfRT-62" style="html=1;shape=umlFrame;dashed=1;fixDash=1;dashPattern=2 2;strokeWidth=2;pointerEvents=0;dropTarget=0;fillColor=default;strokeColor=#000000;fontSize=16;align=center;verticalAlign=middle;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=#000000;height=20;width=50;" vertex="1">
+            <mxGeometry height="270" width="720" x="910" y="709" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="N0BWEeQAWB3H4twJMfRT-86" parent="N0BWEeQAWB3H4twJMfRT-85" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=16;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=#000000;" value="[For each stop summary]" vertex="1">
+          <mxGeometry height="16" width="671.0943396226415" x="48.90566037735848" y="2" as="geometry" />
+        </mxCell>
+        <UserObject label="filterTime(returnTime)" mermaidId="e:Controller-&gt;UseCase#0" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="execute(returnTime)" id="N0BWEeQAWB3H4twJMfRT-101">
+          <mxCell edge="1" parent="N0BWEeQAWB3H4twJMfRT-62" source="N0BWEeQAWB3H4twJMfRT-68" style="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="N0BWEeQAWB3H4twJMfRT-70">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="831.5" y="310" />
+              </Array>
+              <mxPoint x="682" y="310" as="sourcePoint" />
+              <mxPoint x="907" y="310" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="getStopSummaries(returnTime)" mermaidId="e:UseCase-&gt;Repository#0" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="getStopSummaries(returnTime)" id="N0BWEeQAWB3H4twJMfRT-102">
+          <mxCell edge="1" parent="N0BWEeQAWB3H4twJMfRT-62" source="N0BWEeQAWB3H4twJMfRT-70" style="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="N0BWEeQAWB3H4twJMfRT-72">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1158" y="354" />
+              </Array>
+              <mxPoint x="991" y="354" as="sourcePoint" />
+              <mxPoint x="1325" y="354" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="execute(Q4.1)" mermaidId="e:Repository-&gt;DB#0" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="execute(Q1, returnTime, CURRENT_DATE)" id="N0BWEeQAWB3H4twJMfRT-103">
+          <mxCell edge="1" parent="N0BWEeQAWB3H4twJMfRT-62" source="N0BWEeQAWB3H4twJMfRT-72" style="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="N0BWEeQAWB3H4twJMfRT-75">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1532.5" y="398" />
+              </Array>
+              <mxPoint x="1335" y="398" as="sourcePoint" />
+              <mxPoint x="1730" y="398" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Return stop names and passenger counts" mermaidId="e:DB-&gt;Repository#0" mermaidBaseStyle="dashed=1;fixDash=1;dashPattern=3 3;endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="Stop names and passenger counts" id="N0BWEeQAWB3H4twJMfRT-104">
+          <mxCell edge="1" parent="N0BWEeQAWB3H4twJMfRT-62" source="N0BWEeQAWB3H4twJMfRT-75" style="dashed=1;fixDash=1;dashPattern=3 3;endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="N0BWEeQAWB3H4twJMfRT-72">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1532.5" y="491" />
+              </Array>
+              <mxPoint x="1730" y="491" as="sourcePoint" />
+              <mxPoint x="1335" y="491" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="return StopSummary[]" mermaidId="e:Repository-&gt;UseCase#0" mermaidBaseStyle="dashed=1;fixDash=1;dashPattern=3 3;endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="StopSummary[]" id="N0BWEeQAWB3H4twJMfRT-105">
+          <mxCell edge="1" parent="N0BWEeQAWB3H4twJMfRT-62" source="N0BWEeQAWB3H4twJMfRT-72" style="dashed=1;fixDash=1;dashPattern=3 3;endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="N0BWEeQAWB3H4twJMfRT-70">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1158" y="535" />
+              </Array>
+              <mxPoint x="1325" y="535" as="sourcePoint" />
+              <mxPoint x="991" y="535" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <mxCell id="N0BWEeQAWB3H4twJMfRT-107" parent="N0BWEeQAWB3H4twJMfRT-62" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontColor=#000000;" value="createEmptyResult()" vertex="1">
+          <mxGeometry height="18" width="200" x="997" y="600" as="geometry" />
+        </mxCell>
+        <UserObject label="getEmployeesByStop(returnTime, stopId)" mermaidId="e:UseCase-&gt;Repository#1" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="getEmployeesByStop(returnTime, stopId)" id="N0BWEeQAWB3H4twJMfRT-108">
+          <mxCell edge="1" parent="N0BWEeQAWB3H4twJMfRT-62" source="N0BWEeQAWB3H4twJMfRT-70" style="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="N0BWEeQAWB3H4twJMfRT-73">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1158" y="788" />
+              </Array>
+              <mxPoint x="991" y="788" as="sourcePoint" />
+              <mxPoint x="1325" y="788" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="execute(Q4.2)" mermaidId="e:Repository-&gt;DB#1" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="execute(Q2, returnTime, stopId, CURRENT_DATE)" id="N0BWEeQAWB3H4twJMfRT-109">
+          <mxCell edge="1" parent="N0BWEeQAWB3H4twJMfRT-62" source="N0BWEeQAWB3H4twJMfRT-73" style="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="N0BWEeQAWB3H4twJMfRT-76">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1532.5" y="832" />
+              </Array>
+              <mxPoint x="1335" y="832" as="sourcePoint" />
+              <mxPoint x="1730" y="832" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Return employee names and surnames" mermaidId="e:DB-&gt;Repository#1" mermaidBaseStyle="dashed=1;fixDash=1;dashPattern=3 3;endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="Employee names" id="N0BWEeQAWB3H4twJMfRT-110">
+          <mxCell edge="1" parent="N0BWEeQAWB3H4twJMfRT-62" source="N0BWEeQAWB3H4twJMfRT-76" style="dashed=1;fixDash=1;dashPattern=3 3;endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="N0BWEeQAWB3H4twJMfRT-73">
+            <mxGeometry relative="1" as="geometry">
+              <mxPoint as="offset" />
+              <Array as="points">
+                <mxPoint x="1532.5" y="925" />
+              </Array>
+              <mxPoint x="1730" y="925" as="sourcePoint" />
+              <mxPoint x="1335" y="925" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Return EmployeeSummary[]" mermaidId="e:Repository-&gt;UseCase#1" mermaidBaseStyle="dashed=1;fixDash=1;dashPattern=3 3;endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="EmployeeSummary[]" id="N0BWEeQAWB3H4twJMfRT-111">
+          <mxCell edge="1" parent="N0BWEeQAWB3H4twJMfRT-62" source="N0BWEeQAWB3H4twJMfRT-73" style="dashed=1;fixDash=1;dashPattern=3 3;endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="N0BWEeQAWB3H4twJMfRT-70">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1158" y="969" />
+              </Array>
+              <mxPoint x="1325" y="969" as="sourcePoint" />
+              <mxPoint x="991" y="969" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <mxCell id="N0BWEeQAWB3H4twJMfRT-113" parent="N0BWEeQAWB3H4twJMfRT-62" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontColor=#000000;" value="combineStopsCountsAndEmployees()" vertex="1">
+          <mxGeometry height="18" width="200" x="1045" y="1030" as="geometry" />
+        </mxCell>
+        <UserObject label="Return DailyBookingView[]" mermaidId="e:UseCase-&gt;Controller#0" mermaidBaseStyle="dashed=1;fixDash=1;dashPattern=3 3;endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="DailyBookingView[]" id="N0BWEeQAWB3H4twJMfRT-114">
+          <mxCell edge="1" parent="N0BWEeQAWB3H4twJMfRT-62" source="N0BWEeQAWB3H4twJMfRT-70" style="dashed=1;fixDash=1;dashPattern=3 3;endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="N0BWEeQAWB3H4twJMfRT-68">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="831.5" y="1137" />
+              </Array>
+              <mxPoint x="907" y="1137" as="sourcePoint" />
+              <mxPoint x="682" y="1137" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Return daily booking details" mermaidId="e:Controller-&gt;Page#1" mermaidBaseStyle="dashed=1;fixDash=1;dashPattern=3 3;endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="Return daily booking details" id="N0BWEeQAWB3H4twJMfRT-115">
+          <mxCell edge="1" parent="N0BWEeQAWB3H4twJMfRT-62" source="N0BWEeQAWB3H4twJMfRT-68" style="dashed=1;fixDash=1;dashPattern=3 3;endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="N0BWEeQAWB3H4twJMfRT-66">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="541" y="1181" />
+              </Array>
+              <mxPoint x="672" y="1181" as="sourcePoint" />
+              <mxPoint x="410" y="1181" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <mxCell id="N0BWEeQAWB3H4twJMfRT-123" parent="N0BWEeQAWB3H4twJMfRT-62" style="html=1;points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" value="" vertex="1">
+          <mxGeometry height="50" width="10" x="949" y="584" as="geometry" />
+        </mxCell>
+        <mxCell id="N0BWEeQAWB3H4twJMfRT-124" parent="N0BWEeQAWB3H4twJMfRT-62" style="html=1;points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" value="" vertex="1">
+          <mxGeometry height="50" width="10" x="949" y="1017" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
