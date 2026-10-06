@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="หน้า-1" id="koS85_v-o4Uo_p_AZeHv">
-    <mxGraphModel dx="3087" dy="1210" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2486" dy="1194" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -53,7 +53,7 @@
             <mxPoint x="-133" y="250" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="3nJH53ibn-XMHMH6WlZx-18" connectable="0" parent="3nJH53ibn-XMHMH6WlZx-17" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="execute(Q1)" vertex="1">
+        <mxCell id="3nJH53ibn-XMHMH6WlZx-18" connectable="0" parent="3nJH53ibn-XMHMH6WlZx-17" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="execute(QU1.1)" vertex="1">
           <mxGeometry relative="1" x="-0.1871" y="3" as="geometry">
             <mxPoint x="17" y="-7" as="offset" />
           </mxGeometry>

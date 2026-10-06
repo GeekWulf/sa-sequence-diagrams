@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="Page-1" id="_8hBUlFJWdTPHK48v0Rs">
-    <mxGraphModel dx="1597" dy="803" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1380" dy="993" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -125,7 +125,7 @@
             </mxGeometry>
           </mxCell>
         </UserObject>
-        <UserObject label="execute(Q2.1)" mermaidId="e:Repository-&gt;DB#0" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="Query today&#39;s routes&#xa;ordered by departure time" id="qXoLK3iACDr2OCKkccRt-787">
+        <UserObject label="execute(QA3.1)" mermaidId="e:Repository-&gt;DB#0" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="Query today&#39;s routes&#xa;ordered by departure time" id="qXoLK3iACDr2OCKkccRt-787">
           <mxCell edge="1" parent="qXoLK3iACDr2OCKkccRt-714" source="qXoLK3iACDr2OCKkccRt-726" style="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="qXoLK3iACDr2OCKkccRt-730">
             <mxGeometry relative="1" as="geometry">
               <Array as="points">
@@ -158,7 +158,7 @@
             </mxGeometry>
           </mxCell>
         </UserObject>
-        <UserObject label="execute(Q2.2)" mermaidId="e:Repository-&gt;DB#1" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="Query route_stops and stops&#xa;ordered by stop_order" id="qXoLK3iACDr2OCKkccRt-790">
+        <UserObject label="execute(QA3.2)" mermaidId="e:Repository-&gt;DB#1" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="Query route_stops and stops&#xa;ordered by stop_order" id="qXoLK3iACDr2OCKkccRt-790">
           <mxCell edge="1" parent="qXoLK3iACDr2OCKkccRt-714" source="qXoLK3iACDr2OCKkccRt-726" style="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="qXoLK3iACDr2OCKkccRt-869">
             <mxGeometry relative="1" as="geometry">
               <Array as="points">
@@ -218,7 +218,7 @@
         <mxCell id="qXoLK3iACDr2OCKkccRt-742" parent="qXoLK3iACDr2OCKkccRt-741" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=16;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=#000000;" value="[Assign detail to all routes]" vertex="1">
           <mxGeometry height="16" width="264.43729903536973" x="55.56270096463022" y="2" as="geometry" />
         </mxCell>
-        <UserObject label="execute(Q2.3)" mermaidId="e:Repository-&gt;DB#1" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="Query route_stops and stops&#xa;ordered by stop_order" id="qXoLK3iACDr2OCKkccRt-873">
+        <UserObject label="execute(QA3.3)" mermaidId="e:Repository-&gt;DB#1" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="Query route_stops and stops&#xa;ordered by stop_order" id="qXoLK3iACDr2OCKkccRt-873">
           <mxCell edge="1" parent="qXoLK3iACDr2OCKkccRt-714" source="qXoLK3iACDr2OCKkccRt-726" style="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="qXoLK3iACDr2OCKkccRt-875">
             <mxGeometry relative="1" as="geometry">
               <Array as="points">
@@ -251,7 +251,7 @@
             </mxGeometry>
           </mxCell>
         </UserObject>
-        <UserObject label="execute(Q2.4)" mermaidId="e:Repository-&gt;DB#1" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="Query route_stops and stops&#xa;ordered by stop_order" id="qXoLK3iACDr2OCKkccRt-877">
+        <UserObject label="execute(QA3.4)" mermaidId="e:Repository-&gt;DB#1" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="Query route_stops and stops&#xa;ordered by stop_order" id="qXoLK3iACDr2OCKkccRt-877">
           <mxCell edge="1" parent="qXoLK3iACDr2OCKkccRt-714" source="qXoLK3iACDr2OCKkccRt-726" style="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="qXoLK3iACDr2OCKkccRt-876">
             <mxGeometry relative="1" as="geometry">
               <Array as="points">
@@ -516,7 +516,7 @@
             <mxPoint x="81" y="-9" as="offset" />
           </mxGeometry>
         </mxCell>
-        <UserObject label="execute(Q4.1)" mermaidId="e:UseCase-&gt;Repository#1" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="finalizeDaily()" id="qXoLK3iACDr2OCKkccRt-893">
+        <UserObject label="execute(QA3.5)" mermaidId="e:UseCase-&gt;Repository#1" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="finalizeDaily()" id="qXoLK3iACDr2OCKkccRt-893">
           <mxCell edge="1" parent="qXoLK3iACDr2OCKkccRt-714" source="qXoLK3iACDr2OCKkccRt-727" style="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=default;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="qXoLK3iACDr2OCKkccRt-894">
             <mxGeometry relative="1" as="geometry">
               <mxPoint as="offset" />
@@ -539,7 +539,7 @@
             </mxGeometry>
           </mxCell>
         </UserObject>
-        <UserObject label="execute(Q4.2)" mermaidId="e:UseCase-&gt;Repository#1" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="finalizeDaily()" id="7a8CNXXCm1cg2cpryNFv-8">
+        <UserObject label="execute(QA3.6)" mermaidId="e:UseCase-&gt;Repository#1" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="finalizeDaily()" id="7a8CNXXCm1cg2cpryNFv-8">
           <mxCell edge="1" parent="qXoLK3iACDr2OCKkccRt-714" source="7a8CNXXCm1cg2cpryNFv-6" style="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=default;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="7a8CNXXCm1cg2cpryNFv-7">
             <mxGeometry relative="1" as="geometry">
               <mxPoint as="offset" />
@@ -602,7 +602,7 @@
             </mxGeometry>
           </mxCell>
         </UserObject>
-        <UserObject label="execute(Q5.1)" mermaidId="e:UseCase-&gt;Repository#1" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="finalizeDaily()" id="7a8CNXXCm1cg2cpryNFv-20">
+        <UserObject label="execute(QA3.7)" mermaidId="e:UseCase-&gt;Repository#1" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="finalizeDaily()" id="7a8CNXXCm1cg2cpryNFv-20">
           <mxCell edge="1" parent="qXoLK3iACDr2OCKkccRt-714" source="7a8CNXXCm1cg2cpryNFv-19" style="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=default;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="7a8CNXXCm1cg2cpryNFv-21">
             <mxGeometry relative="1" as="geometry">
               <mxPoint as="offset" />
@@ -657,7 +657,7 @@
             </mxGeometry>
           </mxCell>
         </UserObject>
-        <UserObject label="execute(Q5.2)" mermaidId="e:UseCase-&gt;Repository#1" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="finalizeDaily()" id="7a8CNXXCm1cg2cpryNFv-29">
+        <UserObject label="execute(QA3.8)" mermaidId="e:UseCase-&gt;Repository#1" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="finalizeDaily()" id="7a8CNXXCm1cg2cpryNFv-29">
           <mxCell edge="1" parent="qXoLK3iACDr2OCKkccRt-714" source="7a8CNXXCm1cg2cpryNFv-28" style="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=default;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="7a8CNXXCm1cg2cpryNFv-30">
             <mxGeometry relative="1" as="geometry">
               <mxPoint as="offset" />
@@ -720,7 +720,7 @@
             </mxGeometry>
           </mxCell>
         </UserObject>
-        <UserObject label="execute(Q6.1)" mermaidId="e:UseCase-&gt;Repository#1" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="finalizeDaily()" id="7a8CNXXCm1cg2cpryNFv-39">
+        <UserObject label="execute(QA3.9)" mermaidId="e:UseCase-&gt;Repository#1" mermaidBaseStyle="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=none;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="finalizeDaily()" id="7a8CNXXCm1cg2cpryNFv-39">
           <mxCell edge="1" parent="qXoLK3iACDr2OCKkccRt-714" style="endArrow=block;endSize=9;verticalAlign=bottom;edgeStyle=sequenceEdgeStyle;libavoidRouting=0;curved=0;rounded=0;fontSize=16;labelBackgroundColor=default;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" target="7a8CNXXCm1cg2cpryNFv-41">
             <mxGeometry relative="1" as="geometry">
               <mxPoint as="offset" />
